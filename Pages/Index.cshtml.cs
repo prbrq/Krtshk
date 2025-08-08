@@ -1,12 +1,13 @@
 using Krtshk.Models;
 using Krtshk.Repositories;
+using Krtshk.Services;
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Krtshk.Pages;
 
-public class IndexModel(ILinkRepository linkRepository) : PageModel
+public class IndexModel(ILinkRepository linkRepository, IKeyService keyService) : PageModel
 {
     public string Uuid { get; set; } = string.Empty;
 
@@ -14,7 +15,7 @@ public class IndexModel(ILinkRepository linkRepository) : PageModel
     {
         var link = new Link
         {
-            Key = Guid.CreateVersion7().ToString(),
+            Key = keyService.Key(12),
             Url = url
         };
 
