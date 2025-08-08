@@ -1,30 +1,32 @@
+using Krtshk.Models;
+using Krtshk.Repositories;
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Krtshk.Pages;
 
-public class IndexModel : PageModel
+public class IndexModel(ILinkRepository linkRepository) : PageModel
 {
-    public Guid Uuid { get; set; }
+    public string Uuid { get; set; } = string.Empty;
 
-    private static readonly Dictionary<Guid, string> Urls = [];
-
-    public void OnPost(string url)
+    public async Task OnPostAsync(string url)
     {
-        var uuid = Guid.CreateVersion7();
+        var link = new Link
+        {
+            Uuid = Guid.CreateVersion7().ToString(),
+            Url = url
+        };
 
-        Urls[uuid] = url;
+        await linkRepository.AddLinkAsync(link);
 
-        Uuid = uuid;
+        Uuid = link.Uuid;
     }
 
-    public IActionResult OnGetUrl(Guid uuid)
+    public async Task<IActionResult> OnGetUrlAsync(Guid uuid)
     {
-        if (Urls.TryGetValue(uuid, out var url) == false)
-        {
-            return NotFound();
-        }
+        var link = await linkRepository.GetLinkAsync(uuid);
 
-        return Redirect(url);
+        return Redirect(link.Url);
     }
 }
