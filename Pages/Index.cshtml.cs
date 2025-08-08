@@ -14,18 +14,18 @@ public class IndexModel(ILinkRepository linkRepository) : PageModel
     {
         var link = new Link
         {
-            Uuid = Guid.CreateVersion7().ToString(),
+            Key = Guid.CreateVersion7().ToString(),
             Url = url
         };
 
         await linkRepository.AddLinkAsync(link);
 
-        Uuid = link.Uuid;
+        Uuid = link.Key;
     }
 
-    public async Task<IActionResult> OnGetUrlAsync(Guid uuid)
+    public async Task<IActionResult> OnGetUrlAsync(string key)
     {
-        var link = await linkRepository.GetLinkAsync(uuid);
+        var link = await linkRepository.GetLinkAsync(key);
 
         return Redirect(link.Url);
     }

@@ -6,7 +6,7 @@ namespace Krtshk.Models;
 public class Link
 {
     [ExplicitKey]
-    public required string Uuid { get; set; }
+    public required string Key { get; set; }
 
     public required string Url { get; set; }
 }

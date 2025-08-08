@@ -30,7 +30,7 @@ public class DatabaseContext(IConfiguration configuration) : IDatabaseContext
 
         connection.Execute(@"
             CREATE TABLE IF NOT EXISTS Links (
-                Uuid TEXT PRIMARY KEY,
+                Key TEXT PRIMARY KEY,
                 Url TEXT
             );
         ");

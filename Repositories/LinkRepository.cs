@@ -8,7 +8,7 @@ public interface ILinkRepository
 {
     Task AddLinkAsync(Link link);
 
-    Task<Link> GetLinkAsync(Guid uuid);
+    Task<Link> GetLinkAsync(string key);
 }
 
 public class LinkRepository(IDatabaseContext context) : ILinkRepository
@@ -20,10 +20,10 @@ public class LinkRepository(IDatabaseContext context) : ILinkRepository
         return connection.InsertAsync(link);
     }
 
-    public Task<Link> GetLinkAsync(Guid uuid)
+    public Task<Link> GetLinkAsync(string key)
     {
         using var connection = context.CreateConnection();
 
-        return connection.GetAsync<Link>(uuid);
+        return connection.GetAsync<Link>(key);
     }
 }
