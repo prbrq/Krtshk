@@ -21,12 +21,19 @@ public class IndexModel(ILinkRepository linkRepository, IKeyService keyService, 
 
         await linkRepository.AddLinkAsync(link);
 
-        ShortUrl = string.Concat(configuration["BaseUrl"] ?? "", "/Url?key=", link.Key);
+        var baseUrl = configuration["BaseUrl"] ?? ""; // TODO: Обработать null
+
+        ShortUrl = string.Concat(baseUrl, "/", link.Key);
     }
 
-    public async Task<IActionResult> OnGetUrlAsync(string key)
+    public async Task<IActionResult> OnGetAsync(string? key)
     {
-        var link = await linkRepository.GetLinkAsync(key);
+        if (key is null)
+        {
+            return Page();
+        }
+
+        var link = await linkRepository.GetLinkAsync(key); // TODO: Обработать null
 
         return Redirect(link.Url);
     }
