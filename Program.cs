@@ -21,4 +21,6 @@ using (var scope = app.Services.CreateScope())
 
 app.MapRazorPages();
 
+app.UseStaticFiles();
+
 app.Run();
