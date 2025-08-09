@@ -24,7 +24,7 @@ public class IndexModel(
 
         var link = new Link
         {
-            Key = keyService.Key(12),
+            Key = keyService.Key(10),
             Url = url
         };
 
@@ -32,7 +32,7 @@ public class IndexModel(
 
         var baseUrl = configuration["BaseUrl"] ?? "";
 
-        ShortUrl = string.Concat(baseUrl, "/", link.Key);
+        ShortUrl = string.Concat(baseUrl, "/?key=", link.Key);
 
         return Page();
     }
