@@ -7,7 +7,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Krtshk.Pages;
 
-public class IndexModel(ILinkRepository linkRepository, IKeyService keyService, IConfiguration configuration) : PageModel
+public class IndexModel(
+    ILinkRepository linkRepository,
+    IKeyService keyService,
+    IConfiguration configuration
+) : PageModel
 {
     public string ShortUrl { get; private set; } = "";
 
