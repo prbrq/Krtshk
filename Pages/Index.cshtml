@@ -5,6 +5,7 @@
 @model Krtshk.Pages.IndexModel
 
 <h2>Krtshk</h2>
+
 <form method="post" asp-antiforgery="true">
     <p>
         <label>Введите адрес</label>
@@ -13,7 +14,9 @@
     <input type="submit" value="Send">
 </form>
 
-@if(Request.Method == "POST")
+@if (Request.Method == "POST")
 {
-    <p>@Model.Uuid</p>
+    <form>
+        <input type="text" value="@Model.Key" disabled>
+    </form>
 }

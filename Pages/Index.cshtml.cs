@@ -9,7 +9,7 @@ namespace Krtshk.Pages;
 
 public class IndexModel(ILinkRepository linkRepository, IKeyService keyService) : PageModel
 {
-    public string Uuid { get; set; } = string.Empty;
+    public string Key { get; set; } = string.Empty;
 
     public async Task OnPostAsync(string url)
     {
@@ -21,7 +21,7 @@ public class IndexModel(ILinkRepository linkRepository, IKeyService keyService) 
 
         await linkRepository.AddLinkAsync(link);
 
-        Uuid = link.Key;
+        Key = link.Key;
     }
 
     public async Task<IActionResult> OnGetUrlAsync(string key)
