@@ -14,13 +14,11 @@
     <input type="submit" value="Send">
 </form>
 
-<form>
-    <input type="text" id="output" value="@Model.ShortUrl" disabled>
-    @if (Request.Method == "POST")
-    {
-        <button onclick="copyText()">Copy Text</button>
-    }
-</form>
+<input type="text" id="output" value="@Model.ShortUrl" disabled>
+@if (!string.IsNullOrEmpty(@Model.ShortUrl))
+{
+    <button onclick="copyText()">Copy Text</button>
+}
 
 <script>
     function copyText() {
