@@ -1,27 +1,47 @@
 @page
-
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-
 @model Krtshk.Pages.IndexModel
 
-<p>Превращает длинные и неудобные ссылки в короткие и запоминающиеся, чтобы ими было проще делиться!</p>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-sm">
+                <div class="card-body p-4">
+                    <p class="text-center mb-4">Превращает длинные и неудобные ссылки в короткие и запоминающиеся, чтобы
+                        ими было проще делиться!</p>
 
-<form method="post" asp-antiforgery="true">
-    <p>
-        <input placeholder="Введите ссылку, которую нужно сократить" type="url" name="url" required>
-    </p>
-    <input type="submit" value="Сократить">
-</form>
+                    <form method="post" asp-antiforgery="true" class="mb-3">
+                        <div class="mb-3">
+                            <input class="form-control form-control-lg"
+                                placeholder="Введите ссылку, которую нужно сократить" type="url" name="url" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 py-2">Сократить</button>
+                    </form>
 
-<input placeholder="Здесь будет короткая ссылка" type="text" id="output" value="@Model.ShortUrl" disabled>
-@if (!string.IsNullOrEmpty(@Model.ShortUrl))
-{
-    <button onclick="copyText()">Копировать</button>
-}
+                    <div class="input-group mb-3">
+                        <input class="form-control form-control-lg" placeholder="Здесь будет короткая ссылка"
+                            type="text" id="output" value="@Model.ShortUrl" disabled>
+                        @if (!string.IsNullOrEmpty(@Model.ShortUrl))
+                        {
+                            <button class="btn btn-outline-secondary" type="button" onclick="copyText()">Копировать</button>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
     function copyText() {
         var copyText = document.getElementById("output").value;
         navigator.clipboard.writeText(copyText);
+
+        const btn = document.querySelector('[onclick="copyText()"]');
+        var constTextContent = btn.textContent;
+        btn.textContent = 'Скопировано!';
+        setTimeout(() => {
+            btn.textContent = constTextContent;
+        }, 3000);
     }
 </script>
