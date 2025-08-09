@@ -15,5 +15,16 @@
 </form>
 
 <form>
-    <input type="text" value="@Model.ShortUrl" disabled>
+    <input type="text" id="output" value="@Model.ShortUrl" disabled>
+    @if (Request.Method == "POST")
+    {
+        <button onclick="copyText()">Copy Text</button>
+    }
 </form>
+
+<script>
+    function copyText() {
+        var copyText = document.getElementById("output").value;
+        navigator.clipboard.writeText(copyText);
+    }
+</script>
