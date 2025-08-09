@@ -14,9 +14,6 @@
     <input type="submit" value="Send">
 </form>
 
-@if (Request.Method == "POST")
-{
-    <form>
-        <input type="text" value="@Model.Key" disabled>
-    </form>
-}
+<form>
+    <input type="text" value="@Model.ShortUrl" disabled>
+</form>

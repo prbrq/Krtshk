@@ -7,9 +7,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Krtshk.Pages;
 
-public class IndexModel(ILinkRepository linkRepository, IKeyService keyService) : PageModel
+public class IndexModel(ILinkRepository linkRepository, IKeyService keyService, IConfiguration configuration) : PageModel
 {
-    public string Key { get; set; } = string.Empty;
+    public string ShortUrl { get; private set; } = "";
 
     public async Task OnPostAsync(string url)
     {
@@ -21,7 +21,7 @@ public class IndexModel(ILinkRepository linkRepository, IKeyService keyService) 
 
         await linkRepository.AddLinkAsync(link);
 
-        Key = link.Key;
+        ShortUrl = string.Concat(configuration["BaseUrl"] ?? "", "/Url?key=", link.Key);
     }
 
     public async Task<IActionResult> OnGetUrlAsync(string key)
