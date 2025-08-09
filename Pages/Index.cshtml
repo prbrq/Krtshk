@@ -4,20 +4,21 @@
 
 @model Krtshk.Pages.IndexModel
 
-<h2>Krtshk</h2>
+<h2>Коротышка</h2>
+
+<p>Превращает длинные и неудобные ссылки в короткие и запоминающиеся, чтобы ими было проще делиться!</p>
 
 <form method="post" asp-antiforgery="true">
     <p>
-        <label>Type URL</label>
-        <input type="url" name="url" required>
+        <input placeholder="Введите ссылку, которую нужно сократить" type="url" name="url" required>
     </p>
-    <input type="submit" value="Send">
+    <input type="submit" value="Сократить">
 </form>
 
-<input type="text" id="output" value="@Model.ShortUrl" disabled>
+<input placeholder="Здесь будет короткая ссылка" type="text" id="output" value="@Model.ShortUrl" disabled>
 @if (!string.IsNullOrEmpty(@Model.ShortUrl))
 {
-    <button onclick="copyText()">Copy Text</button>
+    <button onclick="copyText()">Копировать</button>
 }
 
 <script>
