@@ -15,8 +15,13 @@ public class IndexModel(
 {
     public string ShortUrl { get; private set; } = "";
 
-    public async Task OnPostAsync(string url)
+    public async Task<IActionResult> OnPostAsync(string url)
     {
+        if (!IsUrlValid(url))
+        {
+            return RedirectToPage("Ooops");
+        }
+
         var link = new Link
         {
             Key = keyService.Key(12),
@@ -25,9 +30,16 @@ public class IndexModel(
 
         await linkRepository.AddLinkAsync(link);
 
-        var baseUrl = configuration["BaseUrl"] ?? ""; // TODO: Обработать null
+        var baseUrl = configuration["BaseUrl"] ?? "";
 
         ShortUrl = string.Concat(baseUrl, "/", link.Key);
+
+        return Page();
+    }
+
+    private static bool IsUrlValid(string url)
+    {
+        return Uri.TryCreate(url, UriKind.Absolute, out var _);
     }
 
     public async Task<IActionResult> OnGetAsync(string? key)
@@ -37,7 +49,12 @@ public class IndexModel(
             return Page();
         }
 
-        var link = await linkRepository.GetLinkAsync(key); // TODO: Обработать null
+        var link = await linkRepository.GetLinkAsync(key);
+
+        if (link is null)
+        {
+            return RedirectToPage("Ooops");
+        }
 
         return Redirect(link.Url);
     }
